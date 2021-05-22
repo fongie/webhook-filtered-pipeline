@@ -6,7 +6,11 @@ const project = new AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   name: 'webhook-filtered-pipeline',
   repositoryUrl: 'https://github.com/fongie/webhook-filtered-pipeline',
-
+  keywords: [
+    'codepipeline',
+    'webhook',
+    'filter'
+  ],
   cdkDependencies: [
     '@aws-cdk/core',
     '@aws-cdk/aws-codepipeline',
