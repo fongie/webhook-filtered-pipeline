@@ -9,7 +9,7 @@ const project = new AwsCdkConstructLibrary({
   keywords: [
     'codepipeline',
     'webhook',
-    'filter'
+    'filter',
   ],
   cdkDependencies: [
     '@aws-cdk/core',
