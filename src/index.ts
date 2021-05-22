@@ -1,8 +1,8 @@
-import { BuildSpec, FilterGroup, ISource, Project, Source } from "@aws-cdk/aws-codebuild";
-import { Pipeline, PipelineProps } from "@aws-cdk/aws-codepipeline";
-import { GitHubSourceAction, GitHubSourceActionProps, GitHubTrigger } from "@aws-cdk/aws-codepipeline-actions";
-import { Effect, PolicyStatement } from "@aws-cdk/aws-iam";
-import { Construct } from "constructs";
+import { BuildSpec, FilterGroup, ISource, Project, Source } from '@aws-cdk/aws-codebuild';
+import { Pipeline, PipelineProps } from '@aws-cdk/aws-codepipeline';
+import { GitHubSourceAction, GitHubSourceActionProps, GitHubTrigger } from '@aws-cdk/aws-codepipeline-actions';
+import { Effect, PolicyStatement } from '@aws-cdk/aws-iam';
+import { Construct } from '@aws-cdk/core';
 
 /**
  * Properties for the webhook filtered pipeline.
@@ -31,8 +31,8 @@ export interface WebhookFilteredPipelineProps extends PipelineProps {
    * filters using `source.webhookFilters` and you must set
    * `source.webhook` to true. Also, you have to set the source action
    * on the pipeline after creating it.
-   * 
-   * NOTE: if you set this, all github properties (including webhookFilters) 
+   *
+   * NOTE: if you set this, all github properties (including webhookFilters)
    * above will be ignored.
    */
   readonly source?: ISource;
@@ -41,15 +41,16 @@ export interface WebhookFilteredPipelineProps extends PipelineProps {
 /**
  * Start an AWS CodePipeline using a source with webhook filters
  * This is currently not supported in CloudFormation so this construct
- * uses a workaround using a CodeBuild project. 
+ * uses a workaround using a CodeBuild project.
  * See issue https://github.com/aws/aws-cdk/issues/10265
- * 
+ *
  * If you set the github props, you will get a pipeline with the first source
  * stage configured. If you set the 'source' prop, you will need to confgure the
  * pipeline's source stage yourself.
  */
 export class WebhookFilteredPipeline extends Pipeline {
   private _starterProject: Project
+  private _githubSourceAction: GitHubSourceAction | undefined
   constructor(scope: Construct, id: string, props: WebhookFilteredPipelineProps) {
     super(scope, id, props);
     const { source, webhookFilters, githubSourceActionProps } = props;
@@ -58,37 +59,37 @@ export class WebhookFilteredPipeline extends Pipeline {
     }
     this._starterProject = new Project(this, `${id}-starter`, {
       source: source ?? Source.gitHub({
-        owner: githubSourceActionProps.owner,
-        repo: githubSourceActionProps.repo,
-        branchOrRef: githubSourceActionProps.branch,
+        owner: githubSourceActionProps!.owner,
+        repo: githubSourceActionProps!.repo,
+        branchOrRef: githubSourceActionProps!.branch,
         webhook: webhookFilters ? true : false,
-        webhookFilters
+        webhookFilters,
       }),
       buildSpec: BuildSpec.fromObject({
         version: '0.2',
         phases: {
           install: {
             'runtime-versions': {
-              nodejs: 10
-            }
+              nodejs: 10,
+            },
           },
           build: {
-            commands: [`aws codepipeline start-pipeline-execution --name ${this.pipelineName}`]
-          }
-        }
-      })
-    })
+            commands: [`aws codepipeline start-pipeline-execution --name ${this.pipelineName}`],
+          },
+        },
+      }),
+    });
     this._starterProject.addToRolePolicy(new PolicyStatement({
-      actions: [ 'codepipeline:StartPipelineExecution' ],
-      resources: [ this.pipelineArn ],
-      effect: Effect.ALLOW
+      actions: ['codepipeline:StartPipelineExecution'],
+      resources: [this.pipelineArn],
+      effect: Effect.ALLOW,
     }));
     if (githubSourceActionProps) {
       this.addStage({
         stageName: 'Source',
         actions: [new GitHubSourceAction({
           ... githubSourceActionProps,
-          trigger: GitHubTrigger.NONE // so it is only started by the starter project
+          trigger: GitHubTrigger.NONE, // so it is only started by the starter project
         })],
       });
     }
@@ -97,6 +98,14 @@ export class WebhookFilteredPipeline extends Pipeline {
    * The CodeBuild project that starts the pipeline
    */
   get starterProject(): Project {
-    return this._starterProject
+    return this._starterProject;
+  }
+  /**
+   * The source action which was added to the pipeline
+   * if you provisioned the pipeline using the github properties
+   * otherwise undefined
+   */
+  get githubSourceAction(): GitHubSourceAction | undefined {
+    return this._githubSourceAction;
   }
 }
