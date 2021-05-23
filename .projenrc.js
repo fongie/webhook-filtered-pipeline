@@ -25,5 +25,6 @@ const project = new AwsCdkConstructLibrary({
   packageName: 'webhook-filtered-pipeline', /* The "name" in package.json. */
   projectType: ProjectType.LIB, /* Which type of project this is (library/app). */
   // releaseWorkflow: undefined,        /* Define a GitHub workflow for releasing from "main" when new versions are bumped. */
+  initialVersion: 'v1.0.0',
 });
 project.synth();
