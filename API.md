@@ -25,7 +25,7 @@ If you set the github props, you will get a pipeline with the first source
 stage configured. If you set the 'source' prop, you will need to confgure the
 pipeline's source stage yourself.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [IResource](#aws-cdk-core-iresource), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [IConstruct](#aws-cdk-core-iconstruct), [IPipeline](#aws-cdk-aws-codepipeline-ipipeline), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [IConstruct](#aws-cdk-core-iconstruct), [IResource](#aws-cdk-core-iresource)
+__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [IResource](#aws-cdk-core-iresource), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [IConstruct](#aws-cdk-core-iconstruct), [IPipeline](#aws-cdk-aws-codepipeline-ipipeline), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable), [IConstruct](#aws-cdk-core-iconstruct), [IResource](#aws-cdk-core-iresource), [INotificationRuleSource](#aws-cdk-aws-codestarnotifications-inotificationrulesource)
 __Extends__: [Pipeline](#aws-cdk-aws-codepipeline-pipeline)
 
 ### Initializer
