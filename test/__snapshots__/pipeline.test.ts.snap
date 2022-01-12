@@ -8,6 +8,9 @@ Object {
         "Artifacts": Object {
           "Type": "NO_ARTIFACTS",
         },
+        "Cache": Object {
+          "Type": "NO_CACHE",
+        },
         "EncryptionKey": Object {
           "Fn::GetAtt": Array [
             "testArtifactsBucketEncryptionKey8916362F",
@@ -452,6 +455,53 @@ Object {
       "Type": "AWS::KMS::Alias",
       "UpdateReplacePolicy": "Delete",
     },
+    "testArtifactsBucketPolicyA3D14421": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "testArtifactsBucket6F90E1EE",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "s3:*",
+              "Condition": Object {
+                "Bool": Object {
+                  "aws:SecureTransport": "false",
+                },
+              },
+              "Effect": "Deny",
+              "Principal": Object {
+                "AWS": "*",
+              },
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "testArtifactsBucket6F90E1EE",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "testArtifactsBucket6F90E1EE",
+                          "Arn",
+                        ],
+                      },
+                      "/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
     "testRoleA48AD45D": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
@@ -610,6 +660,9 @@ Object {
       "Properties": Object {
         "Artifacts": Object {
           "Type": "NO_ARTIFACTS",
+        },
+        "Cache": Object {
+          "Type": "NO_CACHE",
         },
         "EncryptionKey": "alias/aws/s3",
         "Environment": Object {
