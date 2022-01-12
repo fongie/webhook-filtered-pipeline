@@ -43,8 +43,10 @@ new WebhookFilteredPipeline(scope: Construct, id: string, props: WebhookFiltered
   * **artifactBucket** (<code>[IBucket](#aws-cdk-aws-s3-ibucket)</code>)  The S3 bucket used by this Pipeline to store artifacts. __*Default*__: A new S3 bucket will be created.
   * **crossAccountKeys** (<code>boolean</code>)  Create KMS keys for cross-account deployments. __*Default*__: true
   * **crossRegionReplicationBuckets** (<code>Map<string, [IBucket](#aws-cdk-aws-s3-ibucket)></code>)  A map of region to S3 bucket name used for cross-region CodePipeline. __*Default*__: None.
+  * **enableKeyRotation** (<code>boolean</code>)  Enable KMS key rotation for the generated KMS keys. __*Default*__: false (key rotation is disabled)
   * **pipelineName** (<code>string</code>)  Name of the pipeline. __*Default*__: AWS CloudFormation generates an ID and uses that for the pipeline name.
   * **restartExecutionOnUpdate** (<code>boolean</code>)  Indicates whether to rerun the AWS CodePipeline pipeline after you update it. __*Default*__: false
+  * **reuseCrossRegionSupportStacks** (<code>boolean</code>)  Reuse the same cross region support stack for all pipelines in the App. __*Default*__: true (Use the same support stack for all pipelines in App)
   * **role** (<code>[IRole](#aws-cdk-aws-iam-irole)</code>)  The IAM role to be assumed by this Pipeline. __*Default*__: a new IAM role will be created.
   * **stages** (<code>Array<[StageProps](#aws-cdk-aws-codepipeline-stageprops)></code>)  The list of Stages, in order, to create this Pipeline with. __*Default*__: None.
   * **githubSourceActionProps** (<code>[GitHubSourceActionProps](#aws-cdk-aws-codepipeline-actions-githubsourceactionprops)</code>)  GitHub details used to set the starting project source as well as the first action in the pipeline. __*Optional*__
@@ -80,9 +82,11 @@ Name | Type | Description
 **artifactBucket**? | <code>[IBucket](#aws-cdk-aws-s3-ibucket)</code> | The S3 bucket used by this Pipeline to store artifacts.<br/>__*Default*__: A new S3 bucket will be created.
 **crossAccountKeys**? | <code>boolean</code> | Create KMS keys for cross-account deployments.<br/>__*Default*__: true
 **crossRegionReplicationBuckets**? | <code>Map<string, [IBucket](#aws-cdk-aws-s3-ibucket)></code> | A map of region to S3 bucket name used for cross-region CodePipeline.<br/>__*Default*__: None.
+**enableKeyRotation**? | <code>boolean</code> | Enable KMS key rotation for the generated KMS keys.<br/>__*Default*__: false (key rotation is disabled)
 **githubSourceActionProps**? | <code>[GitHubSourceActionProps](#aws-cdk-aws-codepipeline-actions-githubsourceactionprops)</code> | GitHub details used to set the starting project source as well as the first action in the pipeline.<br/>__*Optional*__
 **pipelineName**? | <code>string</code> | Name of the pipeline.<br/>__*Default*__: AWS CloudFormation generates an ID and uses that for the pipeline name.
 **restartExecutionOnUpdate**? | <code>boolean</code> | Indicates whether to rerun the AWS CodePipeline pipeline after you update it.<br/>__*Default*__: false
+**reuseCrossRegionSupportStacks**? | <code>boolean</code> | Reuse the same cross region support stack for all pipelines in the App.<br/>__*Default*__: true (Use the same support stack for all pipelines in App)
 **role**? | <code>[IRole](#aws-cdk-aws-iam-irole)</code> | The IAM role to be assumed by this Pipeline.<br/>__*Default*__: a new IAM role will be created.
 **source**? | <code>[ISource](#aws-cdk-aws-codebuild-isource)</code> | If you do not wish to use GitHub, you can provide a custom source here.<br/>__*Optional*__
 **stages**? | <code>Array<[StageProps](#aws-cdk-aws-codepipeline-stageprops)></code> | The list of Stages, in order, to create this Pipeline with.<br/>__*Default*__: None.
