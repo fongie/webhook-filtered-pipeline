@@ -1,4 +1,10 @@
-# Webhook Filtered Pipeline
+# Archived
+
+This feature now exists in CDK: [PR](https://github.com/aws/aws-cdk/pull/29127) rendering this library unnecessary.
+
+# Old Readme
+
+## Webhook Filtered Pipeline
 
 This is a construct for AWS CDK which enables you to start your CodePipelines using webhook filtered source actions.
 
